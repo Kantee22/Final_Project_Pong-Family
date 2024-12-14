@@ -5,6 +5,7 @@ import turtle
 import heapq
 import paddle
 import time
+import sys
 
 
 class BouncingSimulator:
@@ -22,18 +23,17 @@ class BouncingSimulator:
         turtle.speed(0)
         turtle.tracer(0)
         turtle.hideturtle()
-        turtle.colormode(255)
         self.canvas_width = turtle.screensize()[0]
         self.canvas_height = turtle.screensize()[1]
 
         ball_radius = 0.05 * self.canvas_width
-        self.ball = ball.Ball(ball_radius, 0, 0, -3, 4, (255, 0, 255), 0)
+        self.ball = ball.Ball(ball_radius, 0, 0, -3, 4, "fuchsia", 0)
         self.ball_list.append(self.ball)
 
         tom = turtle.Turtle()
-        self.my_paddle = paddle.Paddle(300, 15, (255, 0, 0), tom)
+        self.my_paddle = paddle.Paddle(300, 15, "red", tom)
         self.my_paddle.set_location([0, -250])
-        self.my_paddle2 = paddle.Paddle(300, 15, (255, 0, 0), tom)
+        self.my_paddle2 = paddle.Paddle(300, 15, "red", tom)
         self.my_paddle2.set_location([0, 250])
 
         self.screen = turtle.Screen()
@@ -87,16 +87,19 @@ class BouncingSimulator:
         self.score_display.write("GAME OVER", align="center", font=("Courier", 36, "normal"))
         self.score_display.goto(0, -50)
         self.score_display.write(f"{winner} WINS!", align="center", font=("Courier", 24, "normal"))
+        time.sleep(1.5)
+        self.screen.tracer(0)
+        self.screen.clear()
+        sys.exit()
 
     def fix(self):
-        if (self.ball.y + self.ball.size > 240 and self.ball.y + self.ball.size < 250) and \
-                (self.my_paddle2.location[0] + 135 > self.ball.x +
-                 self.ball.size > self.my_paddle2.location[0] - 135):
-            self.my_paddle2.width *= 0.9
-        if (self.ball.y - self.ball.size < -240 and self.ball.y - self.ball.size > -250) and \
-                (self.my_paddle.location[0] + 135 > self.ball.x -
-                 self.ball.size > self.my_paddle.location[0] - 135):
-            self.my_paddle.width *= 0.9
+        if 240 < self.ball.y + self.ball.size < 250 and \
+                self.my_paddle2.location[0] - 135 < self.ball.x + self.ball.size < self.my_paddle2.location[0] + 135:
+            self.my_paddle2.width *= 0.95
+
+        if -250 < self.ball.y - self.ball.size < -240 and \
+                self.my_paddle.location[0] - 135 < self.ball.x - self.ball.size < self.my_paddle.location[0] + 135:
+            self.my_paddle.width *= 0.95
 
     def stop_game_for_score(self):
         time.sleep(1.5)
@@ -128,14 +131,12 @@ class BouncingSimulator:
         turtle.pendown()
         turtle.color((0, 0, 0))
         for _ in range(2):
-            turtle.color((255, 255, 255))
+            turtle.color("white")
             turtle.forward(2*self.canvas_width)
             turtle.left(90)
             turtle.color((0, 0, 0))
             turtle.forward(2*self.canvas_height)
             turtle.left(90)
-        if self.score1 >= 3 or self.score2 >= 3:
-            turtle.hideturtle()
 
     def __redraw(self):
         turtle.clear()
