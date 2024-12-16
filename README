@@ -178,17 +178,25 @@
 
 ## **Modifications to Baseline Code**
 
-- **Extended the `Ball` class**:
-  - Added methods for calculating collision times with paddles and walls.
-  - Implemented `bounce_off_paddle()` to handle collisions with paddles.
+"I used the original code provided by my instructor as the base and made several enhancements
+to allow the game to be played by ***two players***:
 
-- **Enhanced `Paddle` class**:
-  - Added functionality to dynamically resize the paddle upon successful ball hits.
+- **Added a Second Paddle**:
+  - I implemented a second paddle so that Player 1 and Player 2 can play against each other.
+  - The paddles are drawn using the ***Turtle*** library.
 
-- **Modified the `BouncingSimulator`**:
-  - Integrated scoring mechanics.
-  - Added paddle movement using keyboard inputs (`A/D` for Player 1 and Arrow Keys for Player 2).
-  - Enhanced game flow to reset the ball and paddles after scoring.
+- **Scoreboard Implementation**:
+  - I created a scoring system that keeps track of each player's points.
+  - The scores are displayed on the screen using Turtle's drawing capabilities, with the function `display_score()`.
+
+- **Ball-Paddle Collision Detection**:
+  - I added a new function `check_ball_hit_paddle()` to detect when the ball collides with either paddle.
+  - If the ball hits a paddle, the paddle shrinks by 5% to increase the challenge.
+
+- **Game End Condition**:
+  -The game ends when a player reaches ***3 points***, and a "Game Over" screen is displayed.
+
+  These changes make the game more interactive and competitive for two players, while still maintaining the simplicity of the original design."
 
 ---
 
