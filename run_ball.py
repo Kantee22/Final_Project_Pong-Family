@@ -92,7 +92,7 @@ class BouncingSimulator:
         self.screen.clear()
         sys.exit()
 
-    def fix(self):
+    def check_ball_hit_paddle(self):
         if 240 < self.ball.y + self.ball.size < 250 and \
                 self.my_paddle2.location[0] - 135 < self.ball.x + self.ball.size < self.my_paddle2.location[0] + 135:
             self.my_paddle2.width *= 0.95
@@ -203,7 +203,7 @@ class BouncingSimulator:
             self.ball.move(e.time - self.t)
             self.t = e.time
             self.check_goal()
-            self.fix()
+            self.check_ball_hit_paddle()
 
             if (ball_a is not None) and (ball_b is not None) and (paddle_a is None):
                 ball_a.bounce_off(ball_b)

@@ -3,7 +3,7 @@ import math
 
 
 class Ball:
-    def __init__(self, size, x, y, vx, vy, color, id):
+    def __init__(self, size, x, y, vx, vy, color, ball_id):
         self.size = size
         self.x = x
         self.y = y
@@ -12,7 +12,7 @@ class Ball:
         self.color = color
         self.mass = 100*size**2
         self.count = 0
-        self.id = id
+        self.id = ball_id
         self.canvas_width = turtle.screensize()[0]
         self.canvas_height = turtle.screensize()[1]
 

@@ -1,0 +1,212 @@
+# Pong Family: A Game that Builds Friendships
+
+## Project Description
+
+**Pong Family** is an arcade-style game inspired by the classic Pong, designed to offer a fresh and fun experience. The game introduces an exciting twist: each time the paddle hits the ball, it gets smaller, making the game progressively more challenging. The game is designed for two players, encouraging fun and friendly competition, and it aims to create memorable moments between friends.
+
+### Features:
+- **Dynamic Gameplay**: Paddles shrink as they hit the ball, making the game more difficult as time goes on.
+- **Arcade Style**: A classic arcade experience with a unique twist to keep the gameplay engaging.
+- **Multiplayer**: Designed specifically for two players, ensuring more fun and competition.
+- **Simple Controls**: Easy-to-learn controls, making it perfect for quick gaming sessions.
+- **No External Libraries**: The game is built using Python's built-in libraries such as `turtle` for graphics and movement.
+
+---
+
+## How to Install and Run the Project
+
+### Prerequisites
+
+- **Python 3.x**: Make sure you have Python 3.x installed on your system.
+
+### Step-by-Step Instructions:
+
+1. **Download the Project Files**:
+   - Download the entire project folder, including all necessary image and sound files.
+
+2. **Setup the Development Environment**:
+   - You do not need any external libraries to run this game. It uses Python's built-in libraries such as `turtle` for graphics and movement.
+   - Make sure that all files, such as images and sound files, are in the same directory to avoid missing assets during gameplay.
+
+3. **Run the Game**:
+   - Simply open the project folder and double-click to run the `run_ball.py` file. The game will start automatically.
+
+4. **Game Controls**:
+   - The game is designed for two players. However, you can also play solo if you'd like.
+   - **Player 1** controls the paddle using the **'A'** and **'D'** keys to move left and right.
+   - **Player 2** controls the paddle using the **Left Arrow** and **Right Arrow** to move left and right.
+   - **Objective**: Keep the ball in play, and as the ball hits the paddle, the paddle will shrink, making the game progressively harder. The first player to reach 3 points wins!
+
+---
+
+## Usage
+
+- **Playing the Game**:
+  - When you run the script, a window will appear with the game.
+  - Player 1 uses **'A'** and **'D'** to move the paddle left and right, respectively.
+  - Player 2 uses the **Left Arrow** and **Right Arrow** to control the second paddle.
+  - The game will keep track of the score, and when one player reaches 3 points, the game ends, and a winner is announced.
+
+- **Demo**:
+  - You can view a demo of the game by running the script, and a video of the gameplay will showcase the real-time interaction with the ball and paddles.
+
+### **Expected Output**
+- The game starts with a bouncing ball. Players deflect the ball using their paddles.
+- The paddle shrinks slightly upon successful deflections.
+- The score is displayed at the top of the screen.
+- The game ends with a **Game Over** screen when one player reaches 3 points.
+
+[Link to Demo Video](#)
+
+---
+
+## **Project Design and Implementation**
+
+### **UML Class Diagram**
+
+```plaintext
++-----------------+         +-----------------+         +-----------------+         +----------------------+
+|     Ball        |         |    Paddle       |         |     Event       |         |  BouncingSimulator   |
++-----------------+         +-----------------+         +-----------------+         +----------------------+
+| - size: float   |         | - width: int    |         | - time: float   |         | - num_balls: int     |
+| - x: float      |         | - height: int   |         | - a: Ball       |         | - ball_list: list    |
+| - y: float      |         | - color: str    |         | - b: Ball       |         | - my_paddle: Paddle  |
+| - vx: float     |         | - location: list|         | - paddle: Paddle|         | - my_paddle2: Paddle |
+| - vy: float     |         | - my_turtle: obj|         |                 |         | - t: float           |
+| - color: str    |         +-----------------+         +-----------------+         | - pq: list           |
+| - mass: float   |         | + set_location(location)  | + is_valid()    |         | + run()              |
+| - count: int    |         | + draw()                 | + __lt__()      |         | + check_goal()       |
+| + move(dt)      |         | + clear()                |                 |         | + reset_ball()       |
+| + bounce_off()  |         +-----------------+         +-----------------+         | + reset_paddle()     |
+| + time_to_hit() |                                                                   | + check_ball_hit_paddle() |
+| + draw()        |                                                                   | + __predict(ball)    |
+| + distance()    |                                                                   | + __redraw()         |
+| + bounce_off_paddle()                                                               | + __paddle_predict() |
+| + bounce_off_vertical_wall()                                                       | + __paddle_predict2()|
+| + bounce_off_horizontal_wall()                                                     | + move_left()        |
+| + time_to_hit_paddle(paddle)                                                       | + move_right()       |
+| + time_to_hit_vertical_wall()                                                      | + move_left2()       |
+| + time_to_hit_horizontal_wall()                                                    | + move_right2()      |
++-----------------+                                                                   +----------------------+
+         ▲                                  ▲                                      ▲
+         | Composition                      | Composition                         | Aggregation
++------------------------+         +----------------------+         +----------------------+
+|   BouncingSimulator    |         |       Event          |         |       Ball          |
++------------------------+         +----------------------+         +----------------------+
+```
+---
+
+## **Purpose of Each Class**
+
+#### **Ball**
+- Represents the ball in the game, handles position updates, collision logic, and interactions with other objects.
+- **Key methods**:
+  - `__init__(size, x, y, vx, vy, color, id)`: Initializes the ball with its size, position, velocity, and color.
+  - `move(dt)`: Updates the position of the ball based on its velocity and the elapsed time `dt`.
+  - `bounce_off(other)`: Handles collisions with another ball.
+  - `bounce_off_paddle(paddle)`: Handles collisions with a paddle.
+  - `bounce_off_vertical_wall()`: Changes the horizontal velocity when the ball hits a vertical wall.
+  - `bounce_off_horizontal_wall()`: Changes the vertical velocity when the ball hits a horizontal wall.
+  - `time_to_hit(other)`: Calculates the time until the ball collides with another ball.
+  - `time_to_hit_paddle(paddle)`: Calculates the time until the ball collides with a paddle.
+  - `time_to_hit_vertical_wall()`: Calculates the time until the ball collides with a vertical wall.
+  - `time_to_hit_horizontal_wall()`: Calculates the time until the ball collides with a horizontal wall.
+  - `draw()`: Draws the ball at its current position on the screen.
+  - `distance(x1, y1, x2, y2)`: Calculates the distance between two points.
+
+---
+
+#### **Paddle**
+- Represents the player's paddle, allowing interaction with the ball and providing gameplay dynamics.
+- **Key methods**:
+  - `__init__(width, height, color, my_turtle)`: Initializes the paddle with its dimensions, color, and drawing turtle.
+  - `set_location(location)`: Updates the paddle's position to the specified location.
+  - `draw()`: Draws the paddle on the screen at its current location.
+  - `clear()`: Clears the paddle's current drawing from the screen.
+  - `__str__()`: Returns a string representation of the paddle.
+
+---
+
+#### **Event**
+- Manages predicted events in the game, such as ball collisions or paddle interactions.
+- **Key methods**:
+  - `__init__(time, ball_a, ball_b, paddle)`: Initializes the event with a specific time, the involved balls, and the paddle.
+  - `__lt__(that)`: Compares this event with another event based on time for priority queue sorting.
+  - `is_valid()`: Checks if the event is still valid by verifying the collision counts of the involved objects.
+
+---
+
+#### **BouncingSimulator**
+- Controls the entire game, managing the flow of events, ball movement, paddle interactions, and user input.
+- **Key methods**:
+  - `__init__(num_ba, p1, p2)`: Initializes the game with the number of balls and player names.
+  - `run()`: Main game loop that processes events and updates the game state.
+  - `check_goal()`: Checks if the ball has crossed a scoring boundary and updates scores accordingly.
+  - `display_score()`: Displays the current score on the screen.
+  - `check_win()`: Checks if a player has won the game.
+  - `end_game(winner)`: Ends the game and announces the winner.
+  - `check_ball_hit_paddle()`: Checks for collisions between the ball and the paddles.
+  - `stop_game_for_score()`: Pauses the game briefly to display the score after a point is scored.
+  - `reset_ball()`: Resets the ball's position to the center of the screen.
+  - `reset_paddle()`: Resets the paddles to their original sizes and positions.
+  - `__predict(a_ball)`: Predicts future events involving the specified ball and adds them to the event queue.
+  - `__draw_border()`: Draws the game border on the screen.
+  - `__redraw()`: Redraws the game components (ball, paddles, and border) on the screen.
+  - `__paddle_predict()`: Predicts collisions between the ball and Player 1's paddle.
+  - `__paddle_predict2()`: Predicts collisions between the ball and Player 2's paddle.
+  - `move_left()`: Moves Player 1's paddle to the left.
+  - `move_left2()`: Moves Player 2's paddle to the left.
+  - `move_right()`: Moves Player 1's paddle to the right.
+  - `move_right2()`: Moves Player 2's paddle to the right.
+
+---
+
+
+## **Interaction Between Classes**
+
+1. **Ball and Paddle**:
+   - The `Ball` class interacts with `Paddle` to detect collisions and update its velocity based on the collision.
+
+2. **Event and BouncingSimulator**:
+   - The `Event` class is used to predict future interactions (e.g., ball hitting a wall or paddle), and the `BouncingSimulator` processes these events to update the game state.
+
+3. **BouncingSimulator**:
+   - Orchestrates the overall game flow by managing `Ball`, `Paddle`, and `Event` objects.
+   - Handles user input to move paddles and updates the display after each event.
+
+---
+
+## **Modifications to Baseline Code**
+
+- **Extended the `Ball` class**:
+  - Added methods for calculating collision times with paddles and walls.
+  - Implemented `bounce_off_paddle()` to handle collisions with paddles.
+
+- **Enhanced `Paddle` class**:
+  - Added functionality to dynamically resize the paddle upon successful ball hits.
+
+- **Modified the `BouncingSimulator`**:
+  - Integrated scoring mechanics.
+  - Added paddle movement using keyboard inputs (`A/D` for Player 1 and Arrow Keys for Player 2).
+  - Enhanced game flow to reset the ball and paddles after scoring.
+
+---
+
+## **Testing and Known Bugs**
+
+#### **Testing**
+- Tested ball-paddle collisions by observing whether the ball's velocity updates correctly after hitting the paddle.
+- Verified that the paddle shrinks appropriately upon successful hits.
+- Confirmed scoring mechanics by ensuring the score updates when the ball crosses the boundary.
+
+#### **Known Bugs**
+1. **Edge Collision Issue**:
+   - Occasionally, if the ball hits the extreme edge of the paddle, the collision is not registered, and the paddle does not shrink.
+
+2. **Background Music**:
+   - Using `os.system` to play background music with Windows Media Player results in no sound on some systems, but the game runs without errors.
+
+3. **Planned Single-Player Mode**:
+   - Initially planned to implement a single-player mode where the paddle follows the ball automatically. However, due to difficulties in achieving smooth paddle movement, this feature was not completed.
+
+---
